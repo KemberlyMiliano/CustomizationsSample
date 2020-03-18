@@ -1,5 +1,4 @@
-﻿using CustomizationsSample.Models;
-using CustomizationsSample.Services;
+﻿using CustomizationsSample.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,10 +11,20 @@ namespace CustomizationsSample.ViewModels
     public class DeviceOrientationPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public OrientationText Text { get; set; } = new OrientationText();
+        public const string Text = "You device orientation is";
+        public string Message { get; set; }
         public DeviceOrientationPageViewModel()
         {
+            DeviceOrientation orientation = DependencyService.Get<IGetDeviceOrientation>().GetDeviceOrientation();
+            if (orientation == DeviceOrientation.Portrait)
+            {
+                Message = $"{Text} Portrait";
+            }
 
+            else if (orientation == DeviceOrientation.Landscape)
+            {
+                Message = $"{Text} Landscape";
+            }
         }
 
 
